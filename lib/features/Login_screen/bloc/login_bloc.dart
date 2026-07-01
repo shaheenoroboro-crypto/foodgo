@@ -25,7 +25,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
       emit(LoginSuccess(response: response));
     } on ApiException catch (e) {
-      emit(LoginFailure(error: e.message));
+      emit(LoginFailure(error: e.message, statusCode: e.statusCode));
     } catch (e) {
       emit(LoginFailure(error: e.toString()));
     }

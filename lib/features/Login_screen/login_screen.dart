@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodgo/features/Error_screen/error_screen.dart';
 import 'package:foodgo/features/Home_screen/home_screen.dart';
 import 'package:foodgo/features/Register_screen/register_screen.dart';
 
@@ -48,20 +49,31 @@ class _LoginScreenViewState extends State<_LoginScreenView> {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginFailure) {
-              final snackBar = SnackBar(
-                elevation: 0,
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: Colors.transparent,
-                content: AwesomeSnackbarContent(
-                  title: 'Login Failed',
-                  message: state.error,
-                  contentType: ContentType.failure,
-                ),
-              );
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(snackBar);
-              //  print(state.error);
+              if (state.statusCode == 500 || state.statusCode == 501) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ErrorScreen(
+                      errorMessage: state.error,
+                      statusCode: state.statusCode,
+                    ),
+                  ),
+                );
+              } else {
+                final snackBar = SnackBar(
+                  elevation: 0,
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.transparent,
+                  content: AwesomeSnackbarContent(
+                    title: 'Login Failed',
+                    message: state.error,
+                    contentType: ContentType.failure,
+                  ),
+                );
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(snackBar);
+              }
             } else if (state is LoginSuccess) {
               final snackBar = SnackBar(
                 elevation: 0,

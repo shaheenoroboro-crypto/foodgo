@@ -23,9 +23,10 @@ class LoginSuccess extends LoginState {
 
 class LoginFailure extends LoginState {
   final String error;
+  final int? statusCode;
 
-  const LoginFailure({required this.error});
+  const LoginFailure({required this.error, this.statusCode});
 
   @override
-  List<Object> get props => [error];
+  List<Object?> get props => [error, statusCode];
 }

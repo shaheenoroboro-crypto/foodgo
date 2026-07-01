@@ -64,6 +64,9 @@ class ApiClient {
       case 403:
         throw UnauthorizedException(message, statusCode: response.statusCode);
       case 500:
+        throw ServerException('Internal Server Error. Please try again later.', statusCode: 500);
+      case 501:
+        throw ServerException('Not Implemented. The server does not support this functionality.', statusCode: 501);
       default:
         throw ServerException(message, statusCode: response.statusCode);
     }
