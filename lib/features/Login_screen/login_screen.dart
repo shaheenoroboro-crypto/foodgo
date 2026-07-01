@@ -59,6 +59,7 @@ class _LoginScreenViewState extends State<_LoginScreenView> {
                     ),
                   ),
                 );
+                print(state.error);
               } else {
                 final snackBar = SnackBar(
                   elevation: 0,
@@ -141,17 +142,17 @@ class _LoginScreenViewState extends State<_LoginScreenView> {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _emailController,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return 'Please enter your E mail';
-                      //   }
-                      //   if (!RegExp(
-                      //     r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                      //   ).hasMatch(value)) {
-                      //     return 'Please enter a valid E mail';
-                      //   }
-                      //   return null;
-                      // },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your E mail';
+                        }
+                        if (!RegExp(
+                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                        ).hasMatch(value)) {
+                          return 'Please enter a valid E mail';
+                        }
+                        return null;
+                      },
                       decoration: InputDecoration(
                         hintText: 'Enter your E mail',
                         hintStyle: const TextStyle(color: Colors.grey),
